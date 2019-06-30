@@ -265,6 +265,13 @@ function test_arb_misc_ops()
    @test contains(setunion(RR(3), RR(4)), 3)
    @test contains(setunion(RR(3), RR(4)), 4)
 
+   # Issue #499
+   RRR = ArbField(1000)
+   b, i = unique_integer(RRR(2)^1000);
+   b, i = unique_integer(RRR(2)^1000);
+   b, i = unique_integer(RRR(2)^1000);
+   b, i = unique_integer(RRR(2)^1000);
+
    println("PASS")
 end
 
@@ -313,6 +320,10 @@ function test_arb_functions()
    @test sqrt(RR(4)) == 2
    @test rsqrt(RR(4)) == 0.5
    @test sqrt1pm1(RR(15)) == 3
+
+   x = sqrtpos(sqrt(RR(2)) - sqrt(RR(2)))
+   @test isfinite(x)
+   @test contains(x, 0)
 
    x = sqrt(RR(2)) - 1
    y = sqrt(RR(3)) - 1

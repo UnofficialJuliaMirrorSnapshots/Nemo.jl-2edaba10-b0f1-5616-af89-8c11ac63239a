@@ -96,6 +96,17 @@ function test_fmpq_mpoly_manipulation()
         @test f == sum((coeff(f, i) * S(fmpq[1], [Nemo.exponent_vector_fmpz(f, i)])  for i in 1:length(f)))
       end
 
+      c = @inferred content(f)
+      if length(f) > 0
+        @test abs(reduce(gcd, (coeff(f, i) for i in 1:length(f)))) == c
+      else
+        @test iszero(c)
+      end
+
+      c = @inferred denominator(f)
+      g = c * f
+      @test isone(denominator(g))
+
       r = S()
       m = S()
       for i = 1:length(f)
