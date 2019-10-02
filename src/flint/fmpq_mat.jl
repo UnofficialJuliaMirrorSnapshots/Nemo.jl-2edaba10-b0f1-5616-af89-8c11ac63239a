@@ -37,15 +37,9 @@ end
 #
 ###############################################################################
 
-function similar(x::fmpq_mat)
-   z = fmpq_mat(nrows(x), ncols(x))
-   z.base_ring = x.base_ring
-   return z
-end
-
-function similar(x::fmpq_mat, r::Int, c::Int)
+function similar(::MatElem, R::FlintRationalField, r::Int, c::Int)
    z = fmpq_mat(r, c)
-   z.base_ring = x.base_ring
+   z.base_ring = R
    return z
 end
 
@@ -259,21 +253,21 @@ function swap_cols(x::fmpq_mat, i::Int, j::Int)
    return swap_cols!(y, i, j)
 end
 
-function invert_rows!(x::fmpq_mat)
+function reverse_rows!(x::fmpq_mat)
    ccall((:fmpq_mat_invert_rows, :libflint), Nothing,
          (Ref{fmpq_mat}, Ptr{Nothing}), x, C_NULL)
    return x
 end
 
-invert_rows(x::fmpq_mat) = invert_rows!(deepcopy(x))
+reverse_rows(x::fmpq_mat) = reverse_rows!(deepcopy(x))
 
-function invert_cols!(x::fmpq_mat)
+function reverse_cols!(x::fmpq_mat)
    ccall((:fmpq_mat_invert_cols, :libflint), Nothing,
          (Ref{fmpq_mat}, Ptr{Nothing}), x, C_NULL)
    return x
 end
 
-invert_cols(x::fmpq_mat) = invert_cols!(deepcopy(x))
+reverse_cols(x::fmpq_mat) = reverse_cols!(deepcopy(x))
 
 ###############################################################################
 #

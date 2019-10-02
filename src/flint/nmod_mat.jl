@@ -37,15 +37,9 @@ end
 #
 ###############################################################################
 
-function similar(x::nmod_mat)
-   z = nmod_mat(nrows(x), ncols(x), x.n)
-   z.base_ring = x.base_ring
-   return z
-end
-
-function similar(x::nmod_mat, r::Int, c::Int)
-   z = nmod_mat(r, c, x.n)
-   z.base_ring = x.base_ring
+function similar(::MatElem, R::NmodRing, r::Int, c::Int)
+   z = nmod_mat(r, c, R.n)
+   z.base_ring = R
    return z
 end
 
@@ -210,21 +204,21 @@ function swap_cols(x::T, i::Int, j::Int) where T <: Zmodn_mat
    return swap_cols!(y, i, j)
 end
 
-function invert_rows!(x::T) where T <: Zmodn_mat
+function reverse_rows!(x::T) where T <: Zmodn_mat
    ccall((:nmod_mat_invert_rows, :libflint), Nothing,
          (Ref{T}, Ptr{Nothing}), x, C_NULL)
    return x
 end
 
-invert_rows(x::T) where T <: Zmodn_mat = invert_rows!(deepcopy(x))
+reverse_rows(x::T) where T <: Zmodn_mat = reverse_rows!(deepcopy(x))
 
-function invert_cols!(x::T) where T <: Zmodn_mat
+function reverse_cols!(x::T) where T <: Zmodn_mat
    ccall((:nmod_mat_invert_cols, :libflint), Nothing,
          (Ref{T}, Ptr{Nothing}), x, C_NULL)
    return x
 end
 
-invert_cols(x::T) where T <: Zmodn_mat = invert_cols!(deepcopy(x))
+reverse_cols(x::T) where T <: Zmodn_mat = reverse_cols!(deepcopy(x))
 
 ################################################################################
 #

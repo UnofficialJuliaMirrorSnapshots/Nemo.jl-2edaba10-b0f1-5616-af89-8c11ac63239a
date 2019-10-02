@@ -37,15 +37,7 @@ end
 #
 ###############################################################################
 
-function similar(x::fq_nmod_mat)
-   z = fq_nmod_mat(nrows(x), ncols(x), base_ring(x))
-   return z
-end
-
-function similar(x::fq_nmod_mat, r::Int, c::Int)
-   z = fq_nmod_mat(r, c, base_ring(x))
-   return z
-end
+similar(::MatElem, R::FqNmodFiniteField, r::Int, c::Int) = fq_nmod_mat(r, c, R)
 
 ################################################################################
 #
@@ -197,21 +189,21 @@ function swap_cols(x::fq_nmod_mat, i::Int, j::Int)
    return swap_cols!(y, i, j)
 end
 
-function invert_rows!(x::fq_nmod_mat)
+function reverse_rows!(x::fq_nmod_mat)
    ccall((:fq_nmod_mat_invert_rows, :libflint), Nothing,
          (Ref{fq_nmod_mat}, Ptr{Nothing}, Ref{FqNmodFiniteField}), x, C_NULL, base_ring(x))
    return x
 end
 
-invert_rows(x::fq_nmod_mat) = invert_rows!(deepcopy(x))
+reverse_rows(x::fq_nmod_mat) = reverse_rows!(deepcopy(x))
 
-function invert_cols!(x::fq_nmod_mat)
+function reverse_cols!(x::fq_nmod_mat)
    ccall((:fq_nmod_mat_invert_cols, :libflint), Nothing,
          (Ref{fq_nmod_mat}, Ptr{Nothing}, Ref{FqNmodFiniteField}), x, C_NULL, base_ring(x))
    return x
 end
 
-invert_cols(x::fq_nmod_mat) = invert_cols!(deepcopy(x))
+reverse_cols(x::fq_nmod_mat) = reverse_cols!(deepcopy(x))
 
 ################################################################################
 #
