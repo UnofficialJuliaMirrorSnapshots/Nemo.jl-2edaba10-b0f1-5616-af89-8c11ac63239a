@@ -1,16 +1,5 @@
 ###############################################################################
 #
-#   Rings.jl : Generic rings
-#
-###############################################################################
-
-function exp(a::T) where {T <: RingElem}
-   a != 0 && error("Exponential of nonzero element")
-   return one(parent(a))
-end
-
-###############################################################################
-#
 #   Generic and specific rings and fields
 #
 ###############################################################################
@@ -75,6 +64,8 @@ include("flint/padic.jl")
 
 include("flint/qadic.jl")
 
+include("flint/local_field.jl")
+
 include("flint/fmpq_rel_series.jl")
 
 include("flint/fmpq_abs_series.jl")
@@ -102,4 +93,3 @@ include("arb/acb_mat.jl")
 include("Factor.jl")
 
 include("polysubst.jl")
-
