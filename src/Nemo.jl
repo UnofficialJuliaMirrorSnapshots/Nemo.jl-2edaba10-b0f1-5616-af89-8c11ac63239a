@@ -292,7 +292,7 @@ end
 #
 ################################################################################
 
-version() = v"0.14.3"
+version() = v"0.15.1"
 
 function versioninfo()
   print("Nemo version $(version())\n")
@@ -352,6 +352,8 @@ export Generic
 #
 ###############################################################################
 
+include("embedding/EmbeddingTypes.jl")
+
 include("flint/FlintTypes.jl")
 
 include("antic/AnticTypes.jl")
@@ -361,6 +363,8 @@ include("arb/ArbTypes.jl")
 #include("ambiguities.jl") # remove ambiguity warnings
 
 include("flint/adhoc.jl")
+
+include("embedding/embedding.jl")
 
 include("Rings.jl")
 
@@ -435,7 +439,7 @@ function test_module(x, y)
    end
 
    cmd = "using Test; using Nemo; include(\"$test_file\"); $test_function_name();"
-   @info("spawning ", `$julia_exe -e \"$cmd\"`)
+   println("spawning ", `$julia_exe -e \"$cmd\"`)
    run(`$julia_exe -e $cmd`)
 end
 
