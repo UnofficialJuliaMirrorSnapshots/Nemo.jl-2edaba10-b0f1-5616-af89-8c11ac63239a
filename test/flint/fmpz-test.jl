@@ -126,6 +126,8 @@ end
 
    @test mod(b, a) == 2
 
+   @test mod(fmpz(3), fmpz(-2)) == fmpz(-1)
+
    @test rem(b, a) == 2
 
    @test mod(b, 12) == 2
@@ -220,6 +222,10 @@ end
 
    @test mod(-12, fmpz(3)) == 0
 
+   @test isa(mod(fmpz(2), -3), fmpz)
+
+   @test mod(fmpz(2), -3) == -1
+
    @test rem(-12, fmpz(3)) == 0
 end
 
@@ -270,6 +276,10 @@ end
    @test cmpabs(a, b) == 1
 
    @test cmp(a, b) == -1
+
+   @test fmpz(2) < 47632748687326487326487326487326
+
+   @test fmpz(2) < 476327486873264873264873264873264837624982
 end
 
 @testset "fmpz.adhoc_comparison..." begin
